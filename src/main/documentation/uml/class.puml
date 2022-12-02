@@ -1,6 +1,8 @@
 @startuml
 title "Classes to: Scripting"
 class Runner /'Запуск программы'/
+interface ScriptingFace /'Интерфейс устанавливающий методы взаимодействия пользователя и программы'/
+class UseConsole /'Реализация консольного интерфейса ScriptingFace'/
 class PropertyTools /'Работа с настройками программы'/
 /'class ConsoleTools Работа с консолью'/
 class StorageTools /'Работа с файлами'/
@@ -13,4 +15,9 @@ class Runner{
     - void hello()
 }
 
+Runner *-- UseConsole
+Runner *-- StorageTools
+Runner *-- Parcer
+
+UseConsole --|> ScriptingFace 
 @enduml

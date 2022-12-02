@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Storage {
+public class StorageTools {
     /**
      * Метод возвращает в виде строки текст файла<p>
      * при чтении файлаидет проверка условий:<p>
