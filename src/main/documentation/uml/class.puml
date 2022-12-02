@@ -1,0 +1,16 @@
+@startuml
+title "Classes to: Scripting"
+class Runner /'Запуск программы'/
+class PropertyTools /'Работа с настройками программы'/
+/'class ConsoleTools Работа с консолью'/
+class StorageTools /'Работа с файлами'/
+class Parcer /'Обработка текста'/
+
+class Runner{
+    /'Запуск программы'/
+    + void main()
+    /'Приветствие пользователя и вывод мануала'/
+    - void hello()
+}
+
+@enduml

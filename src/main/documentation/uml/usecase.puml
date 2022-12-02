@@ -1,6 +1,25 @@
 @startuml
-title "Logic: Scripting"
-participant "Пользователь" as user
-participant "Программа" as app
-participant "Хранилище" as storage
+title "Usecase: Scripting"
+left to right direction
+actor "Пользователь" as user
+package "Окружение пользователя" {
+    usecase "Текстовый редактор" as note
+    usecase "Консоль" as console
+    usecase "Проводник" as filemanager
+}
+usecase "Программа" as program
+database "Файловая система" as storage
+
+user --> console : "Пользователь запускает выполнение программы"
+user <-- console : "Пользователь получает инструкции\nпо использованию программы (*.man)"
+user --> note : "Пользователь создает файл\nсодержащий тело скрипта"
+user --> filemanager : "Пользователь устанавливает путь\nк файлу на локальном устройстве"
+filemanager --> storage : "Прводник размещает\nфайл на локальном устройстве"
+user --> console : "Пользователь передает\nпуть к созданному файлу"
+console --> program : "Программа получает\nпуть к файлу скрипта"
+program <-- storage : "Программа читает файл - мануал (*.man)"
+console <-- program : "Программа выводит содержимое *.man"
+program <-- storage : "Программа читает файл - скрипт"
+console <-- program : "Программа выводит в консоль\nрезультат выполнения скрипта"
+user <-- console  : "Пользователь читает с консоли\nрезультаты выполнения программы"
 @enduml

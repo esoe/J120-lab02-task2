@@ -1,0 +1,6 @@
+@startuml
+title "Logic: Scripting"
+participant "Пользователь" as user
+participant "Программа" as app
+participant "Хранилище" as storage
+@enduml
