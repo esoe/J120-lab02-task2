@@ -11,10 +11,9 @@ public class Command {
         private boolean isName = false;
         private boolean isValue = false;
         private StringBuilder current;//промежуточное значение имени переменной
-        private CommandBulder cmd;
+        
 
     public Command(CommandBulder cmd){
-        this.cmd = cmd;
         script = cmd.script;
         type = cmd.type;
         isQuoted = cmd.isQuoted;
@@ -72,85 +71,6 @@ public class Command {
      */
     public boolean isValue() {
         return isValue;
-    }
-
-
-    /**
-     * чтение команды поэлементно
-     * формирование результирующей строки
-     */
-
-
-
-
-
-    public Command parce(){
-        char [] chars = getScript().toCharArray();
-        int index = 0;
-        /**
-         * определили тип команды print/set
-         */
-        if (script.startsWith("print")){
-            cmd.setType(Mode.PRINT);
-            index += 5;//переместили индекс в позицию после типа команды
-        }
-        if (script.startsWith("set")){
-            cmd.setType(Mode.SET);
-            index += 3;//переместили индекс в позицию после типа команды
-        }
-        /**
-         * читаем дальше, после наименования команды должен стоять пробел
-         */
-        System.out.println(">>>>>>> Синтаксис <<<<<<<<");
-        while (index < chars.length){
-            char c = chars[index];
-            if (c == Syntax.QUOTE.getChar()){
-                cmd.setQuoted(!isQuoted);
-            }
-            if (cmd.isQuoted && (c != Syntax.QUOTE.getChar())){
-                System.out.print(c);//надо писать в переменную
-            }
-            if(!isQuoted){
-                if (c == Syntax.DOLLAR.getChar()){
-                    isDollared = true;
-                    isName = true;
-                }
-                if (isDollared){
-
-                    //$name = value
-                }
-            }
-            index++;
-        }
-        return new Command(cmd);
-    }
-    /**
-     * читаем соманду сплитами
-     */
-    public void read(){
-        /**
-         * обработка по пробелам
-         */
-        System.out.println("======= Обработка по пробелам =======");
-        String[] s = script.split(" ");
-        //setType(s[0]);//определили тип команды (print/set)
-        System.out.println("Содержимое команды: ");
-        for (String string : s) {
-            System.out.println(string);
-        }
-        /**
-         * обработка строковых переменных (по ковычкам)
-         * делим команду по ковычкам,
-         * содержимое пишем в список
-         * - первая запись всегда будет без ковычек (содержит тип команды)
-         * - вторая и последующие четные всегда являются строковыми переменными
-         * 
-         */
-        System.out.println("======= Обработка по ковычкам =======");
-         s = script.split("\"");
-        for (String string : s) {
-            System.out.println(string);
-        }
     }
 
     /**
@@ -239,9 +159,4 @@ public class Command {
             return new Command(this);
         }
     }
-
-    public void out() {
-        System.out.println(getResult());
-    }
-
 }

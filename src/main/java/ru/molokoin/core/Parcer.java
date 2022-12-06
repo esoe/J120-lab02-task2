@@ -1,13 +1,9 @@
 package ru.molokoin.core;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 /**
  * Класс:
  * - получает текстовый файл
  * - разбивает файл на строки (команды)
- * - разбивает строки на операторы
  */
 public class Parcer {
     private String[] cmd;

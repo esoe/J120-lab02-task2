@@ -42,7 +42,8 @@ public class Runner {
             for (String line : parcer.getCmd()) {
                 System.out.println(line);
                 Command cmd = new Command.CommandBulder(line).build();
-                cmd.parce().out();
+                //cmd.parce();
+                //cmd.out();
                 System.out.println("command type: " + cmd.getType());
             }
             /**
