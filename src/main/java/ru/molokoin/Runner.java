@@ -1,6 +1,9 @@
 package ru.molokoin;
 
 import java.io.File;
+
+import ru.molokoin.core.Command;
+import ru.molokoin.core.Parcer;
 /**
  * Класс, запускает выполнение скриптового языка
  */
@@ -25,7 +28,26 @@ public class Runner {
             File source = new File(input);
             //получаем данные из файла, для анализа
             scriptString = StorageTools.get(source);
+            System.out.println("Программой получен скрипт:");
+            System.out.println("-----------------------------------");
             System.out.println(scriptString);
+            System.out.println("-----------------------------------");
+            System.out.println("Обработка скрипта ...");
+            /**
+             * Обработка данных со скриптом /Parcer
+             * - идентификация команд / одна строка - одна команда
+             * - запуск исполнения команд/ build result
+             */
+            Parcer parcer = new Parcer(scriptString);
+            for (String line : parcer.getCmd()) {
+                System.out.println(line);
+                Command cmd = new Command.CommandBulder(line).build();
+                cmd.parce().out();
+                System.out.println("command type: " + cmd.getType());
+            }
+            /**
+             * предлагаем пользователю запустить новый скрипт на выполнение
+             */
             input = UseConsole.setSourcePath();
         }
 
@@ -40,11 +62,8 @@ public class Runner {
          * - печать / print
          */
 
-        /**
-         * Обработка данных со скриптом /Parcer
-         * - идентификация команд / одна строка - одна команда
-         * - запуск исполнения команд/ build result
-         */
+        
+
 
         /**
          * Выполнение команд скрипта
