@@ -38,14 +38,7 @@ public class Runner {
              * - идентификация команд / одна строка - одна команда
              * - запуск исполнения команд/ build result
              */
-            Parcer parcer = new Parcer(scriptString);
-            for (String line : parcer.getCmd()) {
-                System.out.println(line);
-                Command cmd = new Command.CommandBulder(line).build();
-                //cmd.parce();
-                //cmd.out();
-                System.out.println("command type: " + cmd.getType());
-            }
+            new Script(scriptString);
             /**
              * предлагаем пользователю запустить новый скрипт на выполнение
              */

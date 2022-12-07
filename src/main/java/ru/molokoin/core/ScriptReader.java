@@ -37,20 +37,20 @@ public class ScriptReader {
         char [] chars = script.toCharArray();
         while (index < chars.length){
             char c = chars[index];
-            Syntax current = 
-            switch (Syntax.) {
-                case c:
+            // Syntax current = 
+            // switch (Syntax.) {
+            //     case c:
                     
-                    break;
+            //         break;
             
-                default:
-                    break;
+            //     default:
+            //         break;
             }
 
 
-            switch Syntax
+            // switch Syntax
 
-        }
+        // }
         
             
         return new Command(cmd);
