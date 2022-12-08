@@ -3,7 +3,6 @@ package ru.molokoin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 import ru.molokoin.core.Parcer;
 
@@ -34,7 +33,6 @@ public class Script {
                 print(cmd);
             }
         }
-
     }
     
     /**
@@ -132,7 +130,6 @@ public class Script {
                 if ("+".charAt(0) == marks.charAt(index-1)){
                     result = result + varlist.get(parts[index]);
                     index++;
-
                 }//"-"
                 else{
                     result = result - varlist.get(parts[index]);
@@ -158,8 +155,73 @@ public class Script {
         System.out.println("Записываем результат вычисления в varlist...");
         varlist.put(left, result);
         System.out.println("key > " + left + " : " + "value > " + varlist.get(left));
+        System.out.println("Выполнена команда: " + setString + " ...");
     }
-    public void print(String setString){
-        System.out.println("Прочитана команда \"read\" >>> " + setString);
+    /**
+     * Обработка комманды "print"
+     * пример строки скрипта: print "$sum = ", $n1, "+", $n2, "-42=", $sum
+     * - убрать наименование комманды "print"//читаем строку с 6-го символа
+     * - разбить строку по запятым на блоки//split()
+     * - посимвольно перебрать каждый блок//если ковычки, то печатаем, если доллар, то дочитываем до конца имя переменной
+     * 
+     * @param printString
+     */
+    public void print(String printString){
+        System.out.println("Прочитана команда \"read\" >>> " + printString);
+        StringBuilder result = new StringBuilder();//итоговая строка, которая будет выводиться в консоль по результату выполнения print
+        //убрали наименование комманды "print"//читаем строку с 6-го символа
+        String current = printString.substring(5);//слово print состоит из 5-ти символов
+        
+        /**
+         * поэлементно обходим current
+         */
+        Boolean isQuoted = false;//текст в кавычках
+        Boolean isDollared = false;//читаем наименование переменной
+        StringBuilder varName = new StringBuilder();//буфер, для запоминания имени переменной
+        //посимвольно обходим содержимое блока, формируем результирующу строку
+        char[] chars = current.toCharArray();
+        int i = 0;
+        for (char c : chars) {
+            String s = String.valueOf(c);
+            /**
+             * обработка текста в кавычках
+             */
+            //нашли кавычки, запомнили состояние
+            if (s.equals("\"")){
+                isQuoted = !isQuoted;
+                //и ничего больше не сделали
+            }//если символ не является кавычкой, но идет чтение текста в кавычках, запишем значение в результат
+            else {
+                if (isQuoted){
+                    result.append(s);
+                }
+            }
+            /**
+             * обработка наименований переменных
+             */
+            if (s.equals("$") && !isQuoted){
+                isDollared = true;//открыли isDollared на символе $
+            }
+            if (((s.equals(" ") ) && isDollared)){
+                isDollared = false;//закрыли isDollared на символе " "
+                //пишем в строку значение закрытой переменной
+                result.append(varlist.get(varName.toString()));
+                varName = new StringBuilder();
+            }
+            if (!s.equals(" ") && !s.equals(",") && isDollared){
+                varName.append(s);//записали $.. в название имени переменной
+                System.out.println("Текущее состояние varname:" + varName);
+            }
+            //обрабатываем конец строки
+            if (i + 1 == chars.length){
+                result.append(varlist.get(varName.toString()));
+            }
+            i++;
+        }
+        //вывод результата выполнения команды в консоль
+        System.out.println("===================================================");
+        System.out.println("Выполнена команда: " + printString + " ...");
+        System.out.println("Результат выпонения команды print: " + result);
+        
     }
 }
