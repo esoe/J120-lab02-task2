@@ -2,10 +2,8 @@ package ru.molokoin;
 
 import java.io.File;
 
-import ru.molokoin.core.Command;
-import ru.molokoin.core.Parcer;
 /**
- * Класс, запускает выполнение скриптового языка
+ * Класс, запускает консольный интерфейс для запуска ивыполнения команд скрипта
  */
 public class Runner {
     /**
