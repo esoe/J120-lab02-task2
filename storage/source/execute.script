@@ -1,0 +1,5 @@
+print "Hello, world!!!"
+set $n1 = 21
+set $n2 = 121
+set $sum = $n1 + $n2-42
+print "$sum = ", $n1, "+", $n2, "-42=", $sum
